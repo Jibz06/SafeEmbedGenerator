@@ -2,6 +2,10 @@
 
 This BetterDiscord plugin adds a button which allows you to create safe embeds with ease.
 
+![https://imgur.com/Fah5BXD.png](https://imgur.com/Fah5BXD.png)
+
+![https://imgur.com/8IGwGGa.png](https://imgur.com/8IGwGGa.png)
+
 ## Usage
 
  * Provider Name: The provider name field of the embed. Must be less than 256 characters.
