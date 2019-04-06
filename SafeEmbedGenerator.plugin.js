@@ -26,6 +26,9 @@ SafeEmbedGenerator.prototype.start = function() {
     document.head.appendChild(libraryScript);
   }
 
+	setInterval(() => {
+		ZLibrary.PluginUpdater.checkForUpdate("SafeEmbedGenerator", this.getVersion(), "https://raw.githubusercontent.com/KyzaGitHub/SafeEmbedGenerator/master/SafeEmbedGenerator.plugin.js");
+	}, 5000);
 
   // libraryScript = document.getElementById("ShowdownJS");
   // if (!libraryScript || !window.ShowdownJS) {
