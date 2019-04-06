@@ -272,6 +272,7 @@ function openEmbedPopup() {
 
 				providerName.disabled = true;
 				oldProviderName = providerName.value;
+				providerName.value = "";
 				providerName.setAttribute("placeholder", disabledProviderName);
 			} else {
 				description.disabled = false;
@@ -327,6 +328,7 @@ function openEmbedPopup() {
       } else {
         imageType.setAttribute("class", "flexChild-faoVW3 da-flexChild switchEnabled-V2WDBB switch-3wwwcV da-switchEnabled da-switch valueChecked-m-4IJZ value-2hFrkk sizeDefault-2YlOZr size-3rFEHg themeDefault-24hCdX");
         imageTypeInput.setAttribute("checked", "true");
+
 				if (authorName.value.trim() == "") {
 					description.disabled = true;
 					oldDescription = description.value;
@@ -428,7 +430,7 @@ SafeEmbedGenerator.prototype.getDescription = function() {
 };
 
 SafeEmbedGenerator.prototype.getVersion = function() {
-  return "1.1.3";
+  return "1.1.4";
 };
 
 SafeEmbedGenerator.prototype.getAuthor = function() {
