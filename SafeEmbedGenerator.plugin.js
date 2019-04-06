@@ -221,23 +221,38 @@ function openEmbedPopup() {
     var inputStyle = "width: 275px; margin: auto auto 10px auto;";
     var textInputStyle = "background-color: #23272A; border: none; border-radius: 5px; height: 30px; padding-left: 10px;";
 
-		var oldDesc = null;
+		var oldDescription = null;
+		var oldProviderName = null;
+
+		var disabledDescription = "You must have an author name to use the description or provider name with image banner mode on.";
+		var disabledProviderName = "Read the description box.";
 
     providerName.setAttribute("type", "text");
     providerName.setAttribute("placeholder", "Provider Name");
     providerName.setAttribute("style", inputStyle + "margin-top: 10px;" + textInputStyle);
 		providerName.oninput = () => {
-			if (authorName.value.trim() == "" && providerName.value.trim() == "" && imageTypeInput.getAttribute("checked") == "true") {
+			if (authorName.value.trim() == "" && imageTypeInput.getAttribute("checked") == "true") {
 				description.disabled = true;
-				oldDesc = description.value;
+				oldDescription = description.value;
 				description.value = "";
-				description.setAttribute("placeholder", "You must have a provider name or an author name to use the description with image banner mode on.");
+				description.setAttribute("placeholder", disabledDescription);
+
+				providerName.disabled = true;
+				oldProviderName = providerName.value;
+				providerName.value = "";
+				providerName.setAttribute("placeholder", disabledProviderName);
 			} else {
 				description.disabled = false;
-				if (oldDesc != null) {
-					description.value = oldDesc;
+				if (oldDescription != null) {
+					description.value = oldDescription;
 				}
 				description.setAttribute("placeholder", "Description");
+
+				providerName.disabled = false;
+				if (oldProviderName != null) {
+					providerName.value = oldProviderName;
+				}
+				providerName.setAttribute("placeholder", "Provider Name");
 			}
 		};
 
@@ -249,17 +264,27 @@ function openEmbedPopup() {
     authorName.setAttribute("placeholder", "Author Name");
     authorName.setAttribute("style", inputStyle + textInputStyle);
 		authorName.oninput = () => {
-			if (authorName.value.trim() == "" && providerName.value.trim() == "" && imageTypeInput.getAttribute("checked") == "true") {
+			if (authorName.value.trim() == ""  && imageTypeInput.getAttribute("checked") == "true") {
 				description.disabled = true;
-				oldDesc = description.value;
+				oldDescription = description.value;
 				description.value = "";
-				description.setAttribute("placeholder", "You must have a provider name or an author name to use the description with image banner mode on.");
+				description.setAttribute("placeholder", disabledDescription);
+
+				providerName.disabled = true;
+				oldProviderName = providerName.value;
+				providerName.setAttribute("placeholder", disabledProviderName);
 			} else {
 				description.disabled = false;
-				if (oldDesc != null) {
-					description.value = oldDesc;
+				if (oldDescription != null) {
+					description.value = oldDescription;
 				}
 				description.setAttribute("placeholder", "Description");
+
+				providerName.disabled = false;
+				if (oldProviderName != null) {
+					providerName.value = oldProviderName;
+				}
+				providerName.setAttribute("placeholder", "Provider Name");
 			}
 		};
 
@@ -289,18 +314,29 @@ function openEmbedPopup() {
         imageTypeInput.setAttribute("checked", "false");
 
         description.disabled = false;
-				if (oldDesc != null) {
-					description.value = oldDesc;
+				if (oldDescription != null) {
+					description.value = oldDescription;
 				}
 				description.setAttribute("placeholder", "Description");
+
+				providerName.disabled = false;
+				if (oldProviderName != null) {
+					providerName.value = oldProviderName;
+				}
+				providerName.setAttribute("placeholder", "Provider Name");
       } else {
         imageType.setAttribute("class", "flexChild-faoVW3 da-flexChild switchEnabled-V2WDBB switch-3wwwcV da-switchEnabled da-switch valueChecked-m-4IJZ value-2hFrkk sizeDefault-2YlOZr size-3rFEHg themeDefault-24hCdX");
         imageTypeInput.setAttribute("checked", "true");
-				if (authorName.value.trim() == "" && providerName.value.trim() == "") {
+				if (authorName.value.trim() == "") {
 					description.disabled = true;
-					oldDesc = description.value;
+					oldDescription = description.value;
 					description.value = "";
-					description.setAttribute("placeholder", "You must have a provider name or an author name to use the description with image banner mode on.");
+					description.setAttribute("placeholder", disabledDescription);
+
+					providerName.disabled = true;
+					oldProviderName = providerName.value;
+					providerName.value = "";
+					providerName.setAttribute("placeholder", disabledProviderName);
 				}
       }
     };
@@ -392,7 +428,7 @@ SafeEmbedGenerator.prototype.getDescription = function() {
 };
 
 SafeEmbedGenerator.prototype.getVersion = function() {
-  return "1.1.2";
+  return "1.1.3";
 };
 
 SafeEmbedGenerator.prototype.getAuthor = function() {
