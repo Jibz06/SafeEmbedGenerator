@@ -221,7 +221,7 @@ function openEmbedPopup() {
     var inputStyle = "width: 275px; margin: auto auto 10px auto;";
     var textInputStyle = "background-color: #23272A; border: none; border-radius: 5px; height: 30px; padding-left: 10px;";
 
-		var oldDesc = "";
+		var oldDesc = null;
 
     providerName.setAttribute("type", "text");
     providerName.setAttribute("placeholder", "Provider Name");
@@ -234,7 +234,9 @@ function openEmbedPopup() {
 				description.setAttribute("placeholder", "You must have a provider name or an author name to use the description with image banner mode on.");
 			} else {
 				description.disabled = false;
-				description.value = oldDesc;
+				if (oldDesc != null) {
+					description.value = oldDesc;
+				}
 				description.setAttribute("placeholder", "Description");
 			}
 		};
@@ -254,7 +256,9 @@ function openEmbedPopup() {
 				description.setAttribute("placeholder", "You must have a provider name or an author name to use the description with image banner mode on.");
 			} else {
 				description.disabled = false;
-				description.value = oldDesc;
+				if (oldDesc != null) {
+					description.value = oldDesc;
+				}
 				description.setAttribute("placeholder", "Description");
 			}
 		};
@@ -285,7 +289,9 @@ function openEmbedPopup() {
         imageTypeInput.setAttribute("checked", "false");
 
         description.disabled = false;
-				description.value = oldDesc;
+				if (oldDesc != null) {
+					description.value = oldDesc;
+				}
 				description.setAttribute("placeholder", "Description");
       } else {
         imageType.setAttribute("class", "flexChild-faoVW3 da-flexChild switchEnabled-V2WDBB switch-3wwwcV da-switchEnabled da-switch valueChecked-m-4IJZ value-2hFrkk sizeDefault-2YlOZr size-3rFEHg themeDefault-24hCdX");
@@ -386,7 +392,7 @@ SafeEmbedGenerator.prototype.getDescription = function() {
 };
 
 SafeEmbedGenerator.prototype.getVersion = function() {
-  return "1.1.1";
+  return "1.1.2";
 };
 
 SafeEmbedGenerator.prototype.getAuthor = function() {
