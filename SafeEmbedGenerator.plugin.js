@@ -27,19 +27,6 @@ SafeEmbedGenerator.prototype.start = function() {
   }
 
 
-  if (!document.getElementById("colorPickerScript")) {
-    var script = document.createElement("script");
-    var css = document.createElement("link");
-    script.setAttribute("id", "colorPickerScript");
-    css.setAttribute("id", "colorPickerCss");
-    script.setAttribute("src", "http://bgrins.github.io/spectrum/spectrum.js");
-    css.setAttribute("rel", "stylesheet");
-    css.setAttribute("href", "http://bgrins.github.io/spectrum/spectrum.css");
-    document.head.appendChild(script);
-    document.head.appendChild(css);
-  }
-
-
   // libraryScript = document.getElementById("ShowdownJS");
   // if (!libraryScript || !window.ShowdownJS) {
   //   if (libraryScript) libraryScript.parentElement.removeChild(libraryScript);
@@ -93,6 +80,24 @@ SafeEmbedGenerator.prototype.onSwitch = function() {
   addButton();
 };
 
+function generateEmbedPreview() {
+  /*
+  <div class="embed-IeVjo6 da-embed embedWrapper-3AbfJJ da-embedWrapper" aria-hidden="false">
+      <div class="embedPill-1Zntps da-embedPill" style="background-color: rgb(79, 84, 92);"></div>
+      <div class="embedInner-1-fpTo da-embedInner">
+          <div class="embedContent-3fnYWm da-embedContent">
+              <div class="embedContentInner-FBnk7v da-embedContentInner markup-2BOw-j da-markup">
+                  <div class=""><span class="embedProvider-3k5pfl da-embedProvider">pname</span></div>
+                  <div class="embedAuthor-3l5luH da-embedAuthor embedMargin-UO5XwE da-embedMargin"><span class="embedAuthorName-3mnTWj da-embedAuthorName">aname</span></div>
+                  <div class="embedMargin-UO5XwE da-embedMargin"><a tabindex="0" class="anchor-3Z-8Bb da-anchor anchorUnderlineOnHover-2ESHQB da-anchorUnderlineOnHover embedTitleLink-1Zla9e embedLink-1G1K1D embedTitle-3OXDkz da-embedTitleLink da-embedLink da-embedTitle" href="https://em.0x71.cc/aulari" rel="noreferrer noopener" target="_blank">title</a></div>
+                  <div class="embedDescription-1Cuq9a da-embedDescription embedMargin-UO5XwE da-embedMargin">rweqfd</div>
+              </div>
+          </div>
+      </div>
+  </div>
+  */
+}
+
 function addButton() {
   if (document.getElementsByClassName("embed-button-wrapper").length == 0) {
     var daButtons = document.getElementsByClassName("da-buttons")[0];
@@ -122,43 +127,64 @@ function addButton() {
   }
 }
 
-function sendEmbed(providerName, providerUrl, authorName, authorUrl, title, description, image, color) {
+function sendEmbed(providerName, providerUrl, authorName, authorUrl, title, description, image, imageType, color) {
   var channelId = window.location.toString().split("/")[window.location.toString().split("/").length - 1];
-
-  console.log("Embed Popup Opened");
 
   const obj = {};
   obj.providerName = providerName;
   obj.providerUrl = providerUrl; // The link on the Provider Name.
-  obj.authorName = authorName;
+  obj.authorName = authorName + (imageType == "true" ? " " : "");
   obj.authorUrl = authorUrl; // The link on the Author Name.
   obj.title = title;
   obj.description = description;
-  obj.type = "type"; // No idea tbh. 0 is default.
+  obj.isBanner = (imageType == "true" ? true : false); // Photo is a banner, nothing is a small image on the right.
   obj.image = image; // The image displayed on the right.
   obj.color = color.replace("#", ""); // The color on the left of the embed.
-  fetch("https://em.my.to/api/v1/createEmbed", {
-    method: "POST",
-    headers: {
-      "content-type": "application/json"
-    },
-    body: JSON.stringify(obj)
-  }).then(res => {
-    if (res.ok) {
-      res.text().then(text => {
-        ZLibrary.DiscordAPI.Channel.fromId(channelId).sendMessage(`https://em.my.to/e/${text}`, true);
-      });
-    } else {
-      ZLibrary.DiscordAPI.Channel.fromId(channelId).sendBotMessage("There is a problem with the embed API or you are sending too many requests to the embed API.");
-    }
-  }).catch(() => {
-    ZLibrary.DiscordAPI.Channel.fromId(channelId).sendBotMessage("There is a problem with the embed API or you are sending too many requests to the embed API.");
-  });
+
+  // https://em.0x17.cc
+
+	var request = require("request");
+
+	request({
+	    url: "https://em.0x71.cc/",
+	    method: "POST",
+	    json: obj
+	}, (err, res, body) => {
+		if (err) {
+			console.error(err);
+			return;
+		}
+		ZLibrary.DiscordAPI.Channel.fromId(channelId).sendMessage(`https://em.0x71.cc/${body.id}`, true);
+	});
+
+  // fetch("https://em.0x71.cc/", {
+  //   method: "POST",
+  // 	mode: "no-cors",
+  //   // headers: {
+  //   //   "Access-Control-Allow-Origin": "*"
+  //   // },
+  //   body: JSON.stringify(obj)
+  // }).then(res => {
+  // 	console.log(res);
+  //   if (res.ok) {
+  //     res.text().then(text => {
+  // 			console.log(text);
+  //       ZLibrary.DiscordAPI.Channel.fromId(channelId).sendMessage(`https://em.0x71.cc/` + JSON.parse(text).id, true);
+  //     });
+  //   } else {
+  //     ZLibrary.DiscordAPI.Channel.fromId(channelId).sendBotMessage("There is a problem with the embed API or you are sending too many requests to the embed API.");
+  //   }
+  // }).catch(() => {
+  //   ZLibrary.DiscordAPI.Channel.fromId(channelId).sendBotMessage("There is a problem with the embed API or you are sending too many requests to the embed API.");
+  // });
 }
 
 function openEmbedPopup() {
   if (!document.getElementById("embedPopupWrapper")) {
+
     var popupWrapper = document.createElement("div");
+    var popupWrapperWidth = 320;
+    var popupWrapperHeight = 620;
     popupWrapper.setAttribute("id", "embedPopupWrapper");
 
     var embedButton = document.getElementsByClassName("embed-button-wrapper")[0].getBoundingClientRect();
@@ -166,7 +192,7 @@ function openEmbedPopup() {
       if (!document.getElementById("embedPopupWrapper")) {
         window.clearInterval(positionInterval);
       }
-      popupWrapper.setAttribute("style", "text-align: center; border-radius: 10px; width: 320px; height: 580px; position: absolute; top: " + ((window.innerHeight / 2) - (580 / 2)) + "px; left: " + ((window.innerWidth / 2) - (320 / 2)) + "px; background-color: #2F3136; z-index: 999999999999999999999;");
+      popupWrapper.setAttribute("style", "text-align: center; border-radius: 10px; width: " + popupWrapperWidth + "px; height: " + popupWrapperHeight + "px; position: absolute; top: " + ((window.innerHeight / 2) - (popupWrapperHeight / 2)) + "px; left: " + ((window.innerWidth / 2) - (popupWrapperWidth / 2)) + "px; background-color: #2F3136; z-index: 999999999999999999999;");
     }, 100);
 
     // Exit button: <svg width="18" height="18" class="button-1w5pas da-button dropdown-33sEFX da-dropdown open-1Te94t da-open"><g fill="none" fill-rule="evenodd"><path d="M0 0h18v18H0"></path><path stroke="#FFF" d="M4.5 4.5l9 9" stroke-linecap="round"></path><path stroke="#FFF" d="M13.5 4.5l-9 9" stroke-linecap="round"></path></g></svg>
@@ -182,15 +208,33 @@ function openEmbedPopup() {
     var title = document.createElement("input");
     var description = document.createElement("textarea");
     var imageUrl = document.createElement("input");
+    var imageType = document.createElement("div");
+    var imageTypeText = document.createElement("div");
+    var imageTypeInput = document.createElement("input");
     var colorPicker = document.createElement("input");
     var submitButton = document.createElement("input");
+    var fadeOutBackground = document.createElement("div");
 
     var inputStyle = "width: 275px; margin: auto auto 10px auto;";
     var textInputStyle = "background-color: #23272A; border: none; border-radius: 5px; height: 30px; padding-left: 10px;";
 
+		var oldDesc = "";
+
     providerName.setAttribute("type", "text");
     providerName.setAttribute("placeholder", "Provider Name");
     providerName.setAttribute("style", inputStyle + "margin-top: 10px;" + textInputStyle);
+		providerName.oninput = () => {
+			if (authorName.value.trim() == "" && providerName.value.trim() == "" && imageTypeInput.getAttribute("checked") == "true") {
+				description.disabled = true;
+				oldDesc = description.value;
+				description.value = "";
+				description.setAttribute("placeholder", "You must have a provider name or an author name to use the description with image banner mode on.");
+			} else {
+				description.disabled = false;
+				description.value = oldDesc;
+				description.setAttribute("placeholder", "Description");
+			}
+		};
 
     providerUrl.setAttribute("type", "text");
     providerUrl.setAttribute("placeholder", "Provider URL");
@@ -199,6 +243,18 @@ function openEmbedPopup() {
     authorName.setAttribute("type", "text");
     authorName.setAttribute("placeholder", "Author Name");
     authorName.setAttribute("style", inputStyle + textInputStyle);
+		authorName.oninput = () => {
+			if (authorName.value.trim() == "" && providerName.value.trim() == "" && imageTypeInput.getAttribute("checked") == "true") {
+				description.disabled = true;
+				oldDesc = description.value;
+				description.value = "";
+				description.setAttribute("placeholder", "You must have a provider name or an author name to use the description with image banner mode on.");
+			} else {
+				description.disabled = false;
+				description.value = oldDesc;
+				description.setAttribute("placeholder", "Description");
+			}
+		};
 
     authorUrl.setAttribute("type", "text");
     authorUrl.setAttribute("placeholder", "Author URL");
@@ -215,6 +271,46 @@ function openEmbedPopup() {
     imageUrl.setAttribute("placeholder", "Image URL");
     imageUrl.setAttribute("style", inputStyle + textInputStyle);
 
+    // Checked   = valueChecked-m-4IJZ
+    // Unchecked = valueUnchecked-2lU_20
+    imageType.setAttribute("class", "flexChild-faoVW3 da-flexChild switchEnabled-V2WDBB switch-3wwwcV da-switchEnabled da-switch valueUnchecked-2lU_20 value-2hFrkk sizeDefault-2YlOZr size-3rFEHg themeDefault-24hCdX");
+    imageType.setAttribute("tabindex", "0");
+    imageType.setAttribute("style", "flex: 0 0 auto;" + inputStyle);
+    imageType.onclick = () => {
+      if (imageType.getAttribute("class") == "flexChild-faoVW3 da-flexChild switchEnabled-V2WDBB switch-3wwwcV da-switchEnabled da-switch valueChecked-m-4IJZ value-2hFrkk sizeDefault-2YlOZr size-3rFEHg themeDefault-24hCdX") {
+        imageType.setAttribute("class", "flexChild-faoVW3 da-flexChild switchEnabled-V2WDBB switch-3wwwcV da-switchEnabled da-switch valueUnchecked-2lU_20 value-2hFrkk sizeDefault-2YlOZr size-3rFEHg themeDefault-24hCdX");
+        imageTypeInput.setAttribute("checked", "false");
+
+        description.disabled = false;
+				description.value = oldDesc;
+				description.setAttribute("placeholder", "Description");
+      } else {
+        imageType.setAttribute("class", "flexChild-faoVW3 da-flexChild switchEnabled-V2WDBB switch-3wwwcV da-switchEnabled da-switch valueChecked-m-4IJZ value-2hFrkk sizeDefault-2YlOZr size-3rFEHg themeDefault-24hCdX");
+        imageTypeInput.setAttribute("checked", "true");
+				if (authorName.value.trim() == "" && providerName.value.trim() == "") {
+					description.disabled = true;
+					oldDesc = description.value;
+					description.value = "";
+					description.setAttribute("placeholder", "You must have a provider name or an author name to use the description with image banner mode on.");
+				}
+      }
+    };
+    imageTypeText.innerHTML = "Banner Image Mode";
+    imageTypeText.setAttribute("style", "position: absolute; text-align: center; width: 100%; height: 100%; line-height: 22.5px;");
+    imageTypeInput.setAttribute("class", "checkboxEnabled-CtinEn checkbox-2tyjJg da-checkboxEnabled da-checkbox");
+    imageTypeInput.setAttribute("type", "checkbox");
+    imageTypeInput.setAttribute("tabindex", "-1");
+    imageTypeInput.setAttribute("checked", "false");
+    imageTypeInput.setAttribute("style", "margin-left: auto; margin-right: auto;");
+    imageType.appendChild(imageTypeText);
+    imageType.appendChild(imageTypeInput);
+
+    /*
+			<div class="flexChild-faoVW3 da-flexChild switchEnabled-V2WDBB switch-3wwwcV da-switchEnabled da-switch valueChecked-m-4IJZ value-2hFrkk sizeDefault-2YlOZr size-3rFEHg themeDefault-24hCdX" tabindex="0" style="flex: 0 0 auto;">
+			<input class="checkboxEnabled-CtinEn checkbox-2tyjJg da-checkboxEnabled da-checkbox" type="checkbox" tabindex="-1" checked="">
+			</div>
+		*/
+
     colorPicker.setAttribute("type", "color");
     colorPicker.setAttribute("style", inputStyle + "background-color: #23272A; border: none; border-radius: 5px;");
 
@@ -224,7 +320,8 @@ function openEmbedPopup() {
 
     submitButton.onclick = () => {
       if (!(providerName.value.trim() == "" && providerUrl.value.trim() == "" && authorName.value.trim() == "" && authorUrl.value.trim() == "" && description.value.trim() == "" && imageUrl.value.trim() == "")) {
-        sendEmbed(providerName.value, providerUrl.value, authorName.value, authorUrl.value, "", description.value, imageUrl.value, colorPicker.value);
+        sendEmbed(providerName.value, providerUrl.value, authorName.value, authorUrl.value, "", description.value, imageUrl.value, imageTypeInput.getAttribute("checked"), colorPicker.value);
+        closeEmbedPopup();
       }
     };
 
@@ -236,6 +333,7 @@ function openEmbedPopup() {
     //    popupWrapper.appendChild(title);
     popupWrapper.appendChild(description);
     popupWrapper.appendChild(imageUrl);
+    popupWrapper.appendChild(imageType);
     popupWrapper.appendChild(colorPicker);
     popupWrapper.appendChild(submitButton);
 
@@ -248,45 +346,24 @@ function openEmbedPopup() {
     // });
 
     // Add the fadeout for the background.
-    var fadeOutBackground = document.createElement("div");
+    fadeOutBackground.setAttribute("id", "fadeOutBackground");
     fadeOutBackground.setAttribute("style", "position: absolute; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.8); z-index: 999999999999999999998;");
     fadeOutBackground.onclick = () => {
-      popupWrapper.remove();
-      fadeOutBackground.remove();
+      closeEmbedPopup();
     };
     document.body.appendChild(fadeOutBackground);
 
     document.body.appendChild(popupWrapper);
-  }
 
-  // var http = new XMLHttpRequest;
-  // http.open("POST", "https://em.my.to/api/v1/createEmbed", true);
-  // http.setRequestHeader('Content-Type', 'text/xml');
-  // http.onreadystatechange = function() {
-  //   if (http.readyState == 4) {
-  //     console.log('"' + http.responseText + '"');
-  //     if (http.responseText == "Too many requests, please try again later." || http.responseText == "") {
-  //       ZLibrary.DiscordAPI.Channel.fromId(channelId).sendBotMessage("You are sending too many requests to the embed API.");
-  //       return;
-  //     }
-  //     var embedLink = "https://em.my.to/e/" + http.responseText;
-  //     console.log(embedLink);
-  //     console.log(channelId);
-  //     ZLibrary.DiscordAPI.Channel.fromId(channelId).sendMessage(embedLink, true);
-  //   }
-  // }
-  // var json = {
-  //   authorName: "grewgrewg",
-  //   authorUrl: "rewgrewgrewgr",
-  //   color: "000000",
-  //   description: "gregregrewgr",
-  //   image: "wgrwegrewgrew",
-  //   providerName: "gregrewg",
-  //   providerUrl: "regrewgrew",
-  //   title: "ewgregrwe",
-  //   type: "egrewgrewgr"
-  // };
-  // http.send(JSON.stringify(json));
+    console.log("Embed popup opened.");
+  }
+}
+
+function closeEmbedPopup() {
+  console.log("Embed popup closed.");
+
+  document.getElementById("embedPopupWrapper").remove();
+  document.getElementById("fadeOutBackground").remove();
 }
 
 SafeEmbedGenerator.prototype.observer = function(e) {
@@ -306,7 +383,7 @@ SafeEmbedGenerator.prototype.getDescription = function() {
 };
 
 SafeEmbedGenerator.prototype.getVersion = function() {
-  return "1.0.0";
+  return "1.1.0";
 };
 
 SafeEmbedGenerator.prototype.getAuthor = function() {
