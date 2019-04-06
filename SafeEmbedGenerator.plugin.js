@@ -2,7 +2,7 @@
 
 var SafeEmbedGenerator = function() {};
 
-var interval;
+var updateInterval;
 SafeEmbedGenerator.prototype.start = function() {
   /* Start Libraries */
 
@@ -26,7 +26,7 @@ SafeEmbedGenerator.prototype.start = function() {
     document.head.appendChild(libraryScript);
   }
 
-	setInterval(() => {
+	updateInterval = setInterval(() => {
 		ZLibrary.PluginUpdater.checkForUpdate("SafeEmbedGenerator", this.getVersion(), "https://raw.githubusercontent.com/KyzaGitHub/SafeEmbedGenerator/master/SafeEmbedGenerator.plugin.js");
 	}, 5000);
 
@@ -72,7 +72,7 @@ SafeEmbedGenerator.prototype.unload = function() {
 };
 
 SafeEmbedGenerator.prototype.stop = function() {
-
+	clearInterval(updateInterval);
 };
 
 SafeEmbedGenerator.prototype.onMessage = function() {
@@ -386,7 +386,7 @@ SafeEmbedGenerator.prototype.getDescription = function() {
 };
 
 SafeEmbedGenerator.prototype.getVersion = function() {
-  return "1.1.0";
+  return "1.1.1";
 };
 
 SafeEmbedGenerator.prototype.getAuthor = function() {
