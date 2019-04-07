@@ -25,8 +25,9 @@ This BetterDiscord plugin adds a button which allows you to create safe embeds w
 
 ## Credits
 
-This plugin is currently using a [new API](https://em.0x71.cc/). At the moment I do not know who created it.
-This README will be updated when I do know who created the API.
+This plugin is currently using a [new API](https://em.0x71.cc/).
+Thanks to `Qwerasd#5202`for creating this API. 
+
 
 ### Lucario's API is no longer used in this plugin.
 
