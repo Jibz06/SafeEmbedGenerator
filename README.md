@@ -14,6 +14,7 @@ This BetterDiscord plugin adds a button which allows you to create safe embeds w
  * Author URL: The link associated with the author name.
  * Description: The string that goes into the body of the embed. Must be less than 2048 characters.
  * Image URL: A link to an image.
+ * Image Banner Mode: Changes the image to a banner. Displays as a normal image if no text is in the embed. You cannot use `Provider Name` or `Description` if this is enabled unless `Author Name` is used.
  * Color: The color of the embed, in rrggbb format (without the #). Must be exactly 6 characters long if used.
 
 ## Coming Soon
