@@ -21,8 +21,11 @@ This BetterDiscord plugin adds a button which allows you to create safe embeds w
 
  * General settings.
  * Save the last used color.
+ * Recently used embeds.
+ * Favorite embeds.
  * Live embed preview.
  * Make the plugin itself generate the embed and host it on CodePen?
+ * Make my own API?
 
 ## Credits
 
