@@ -26,9 +26,9 @@ SafeEmbedGenerator.prototype.start = function() {
     document.head.appendChild(libraryScript);
   }
 
-	updateInterval = setInterval(() => {
-		ZLibrary.PluginUpdater.checkForUpdate("SafeEmbedGenerator", this.getVersion(), "https://raw.githubusercontent.com/KyzaGitHub/SafeEmbedGenerator/master/SafeEmbedGenerator.plugin.js");
-	}, 5000);
+  updateInterval = setInterval(() => {
+    ZLibrary.PluginUpdater.checkForUpdate("SafeEmbedGenerator", this.getVersion(), "https://raw.githubusercontent.com/KyzaGitHub/SafeEmbedGenerator/master/SafeEmbedGenerator.plugin.js");
+  }, 5000);
 
   // libraryScript = document.getElementById("ShowdownJS");
   // if (!libraryScript || !window.ShowdownJS) {
@@ -72,7 +72,7 @@ SafeEmbedGenerator.prototype.unload = function() {
 };
 
 SafeEmbedGenerator.prototype.stop = function() {
-	clearInterval(updateInterval);
+  clearInterval(updateInterval);
 };
 
 SafeEmbedGenerator.prototype.onMessage = function() {
@@ -146,19 +146,19 @@ function sendEmbed(providerName, providerUrl, authorName, authorUrl, title, desc
 
   // https://em.0x17.cc
 
-	var request = require("request");
+  var request = require("request");
 
-	request({
-	    url: "https://em.0x71.cc/",
-	    method: "POST",
-	    json: obj
-	}, (err, res, body) => {
-		if (err) {
-			console.error(err);
-			return;
-		}
-		ZLibrary.DiscordAPI.Channel.fromId(channelId).sendMessage(`https://em.0x71.cc/${body.id}`, true);
-	});
+  request({
+    url: "https://em.0x71.cc/",
+    method: "POST",
+    json: obj
+  }, (err, res, body) => {
+    if (err) {
+      console.error(err);
+      return;
+    }
+    ZLibrary.DiscordAPI.Channel.fromId(channelId).sendMessage(`http://em.0x71.cc/${body.id}`, true);
+  });
 
   // fetch("https://em.0x71.cc/", {
   //   method: "POST",
@@ -195,7 +195,7 @@ function openEmbedPopup() {
       if (!document.getElementById("embedPopupWrapper")) {
         window.clearInterval(positionInterval);
       }
-      popupWrapper.setAttribute("style", "text-align: center; border-radius: 10px; width: " + popupWrapperWidth + "px; height: " + popupWrapperHeight + "px; position: absolute; top: " + ((window.innerHeight / 2) - (popupWrapperHeight / 2)) + "px; left: " + ((window.innerWidth / 2) - (popupWrapperWidth / 2)) + "px; background-color: #2F3136; z-index: 999999999999999999999;");
+      popupWrapper.setAttribute("style", "text-align: center; border-radius: 10px; width: " + popupWrapperWidth + "px; height: " + popupWrapperHeight + "px; position: absolute; top: " + ((window.innerHeight / 2) - (popupWrapperHeight / 2)) + "px; left: " + ((window.innerWidth / 2) - (popupWrapperWidth / 2)) + "px; background-color: #36393F; z-index: 999999999999999999999;");
     }, 100);
 
     // Exit button: <svg width="18" height="18" class="button-1w5pas da-button dropdown-33sEFX da-dropdown open-1Te94t da-open"><g fill="none" fill-rule="evenodd"><path d="M0 0h18v18H0"></path><path stroke="#FFF" d="M4.5 4.5l9 9" stroke-linecap="round"></path><path stroke="#FFF" d="M13.5 4.5l-9 9" stroke-linecap="round"></path></g></svg>
@@ -221,88 +221,63 @@ function openEmbedPopup() {
     var inputStyle = "width: 275px; margin: auto auto 10px auto;";
     var textInputStyle = "background-color: #23272A; border: none; border-radius: 5px; height: 30px; padding-left: 10px;";
 
-		var oldDescription = null;
-		var oldProviderName = null;
-
-		var disabledDescription = "You must have an author name to use the description or provider name with image banner mode on.";
-		var disabledProviderName = "Read the description box.";
-
     providerName.setAttribute("type", "text");
     providerName.setAttribute("placeholder", "Provider Name");
     providerName.setAttribute("style", inputStyle + "margin-top: 10px;" + textInputStyle);
-		providerName.oninput = () => {
-			if (authorName.value.trim() == "" && imageTypeInput.getAttribute("checked") == "true") {
-				description.disabled = true;
-				oldDescription = description.value;
-				description.value = "";
-				description.setAttribute("placeholder", disabledDescription);
+    providerName.oninput = () => {
+      oldProviderName = providerName.value;
 
-				providerName.disabled = true;
-				oldProviderName = providerName.value;
-				providerName.value = "";
-				providerName.setAttribute("placeholder", disabledProviderName);
-			} else {
-				description.disabled = false;
-				if (oldDescription != null) {
-					description.value = oldDescription;
-				}
-				description.setAttribute("placeholder", "Description");
-
-				providerName.disabled = false;
-				if (oldProviderName != null) {
-					providerName.value = oldProviderName;
-				}
-				providerName.setAttribute("placeholder", "Provider Name");
-			}
-		};
+      createEmbedPreviewPopup(popupWrapperWidth + 100, providerName.value, providerUrl.value, authorName.value, authorUrl.value, description.value, colorPicker.value, imageTypeInput.getAttribute("checked"), imageUrl.value);
+    };
 
     providerUrl.setAttribute("type", "text");
     providerUrl.setAttribute("placeholder", "Provider URL");
     providerUrl.setAttribute("style", inputStyle + textInputStyle);
+    providerUrl.oninput = () => {
+      createEmbedPreviewPopup(popupWrapperWidth + 100, providerName.value, providerUrl.value, authorName.value, authorUrl.value, description.value, colorPicker.value, imageTypeInput.getAttribute("checked"), imageUrl.value);
+    };
 
     authorName.setAttribute("type", "text");
     authorName.setAttribute("placeholder", "Author Name");
     authorName.setAttribute("style", inputStyle + textInputStyle);
-		authorName.oninput = () => {
-			if (authorName.value.trim() == ""  && imageTypeInput.getAttribute("checked") == "true") {
-				description.disabled = true;
-				oldDescription = description.value;
-				description.value = "";
-				description.setAttribute("placeholder", disabledDescription);
+    authorName.oninput = () => {
+      if (authorName.value.trim() == "" && imageTypeInput.getAttribute("checked") == "true") {
+        disableUnusableInputs(authorName, description, providerName);
+      } else {
+        reenableNowUsableInputs(authorName, description, providerName);
+      }
 
-				providerName.disabled = true;
-				oldProviderName = providerName.value;
-				providerName.value = "";
-				providerName.setAttribute("placeholder", disabledProviderName);
-			} else {
-				description.disabled = false;
-				if (oldDescription != null) {
-					description.value = oldDescription;
-				}
-				description.setAttribute("placeholder", "Description");
-
-				providerName.disabled = false;
-				if (oldProviderName != null) {
-					providerName.value = oldProviderName;
-				}
-				providerName.setAttribute("placeholder", "Provider Name");
-			}
-		};
+      createEmbedPreviewPopup(popupWrapperWidth + 100, providerName.value, providerUrl.value, authorName.value, authorUrl.value, description.value, colorPicker.value, imageTypeInput.getAttribute("checked"), imageUrl.value);
+    };
 
     authorUrl.setAttribute("type", "text");
     authorUrl.setAttribute("placeholder", "Author URL");
     authorUrl.setAttribute("style", inputStyle + textInputStyle);
+    authorUrl.oninput = () => {
+      createEmbedPreviewPopup(popupWrapperWidth + 100, providerName.value, providerUrl.value, authorName.value, authorUrl.value, description.value, colorPicker.value, imageTypeInput.getAttribute("checked"), imageUrl.value);
+    };
 
     title.setAttribute("type", "text");
     title.setAttribute("placeholder", "Title");
     title.setAttribute("style", inputStyle + textInputStyle);
+    title.oninput = () => {
+      createEmbedPreviewPopup(popupWrapperWidth + 100, providerName.value, providerUrl.value, authorName.value, authorUrl.value, description.value, colorPicker.value, imageTypeInput.getAttribute("checked"), imageUrl.value);
+    };
 
     description.setAttribute("placeholder", "Description");
     description.setAttribute("style", inputStyle + "height: 250px !important; resize: none;" + textInputStyle);
+    description.oninput = () => {
+      oldDescription = description.value;
+
+      createEmbedPreviewPopup(popupWrapperWidth + 100, providerName.value, providerUrl.value, authorName.value, authorUrl.value, description.value, colorPicker.value, imageTypeInput.getAttribute("checked"), imageUrl.value);
+    };
 
     imageUrl.setAttribute("type", "text");
     imageUrl.setAttribute("placeholder", "Image URL");
     imageUrl.setAttribute("style", inputStyle + textInputStyle);
+    imageUrl.oninput = () => {
+      createEmbedPreviewPopup(popupWrapperWidth + 100, providerName.value, providerUrl.value, authorName.value, authorUrl.value, description.value, colorPicker.value, imageTypeInput.getAttribute("checked"), imageUrl.value);
+    };
 
     // Checked   = valueChecked-m-4IJZ
     // Unchecked = valueUnchecked-2lU_20
@@ -314,33 +289,15 @@ function openEmbedPopup() {
         imageType.setAttribute("class", "flexChild-faoVW3 da-flexChild switchEnabled-V2WDBB switch-3wwwcV da-switchEnabled da-switch valueUnchecked-2lU_20 value-2hFrkk sizeDefault-2YlOZr size-3rFEHg themeDefault-24hCdX");
         imageTypeInput.setAttribute("checked", "false");
 
-        description.disabled = false;
-				if (oldDescription != null) {
-					description.value = oldDescription;
-				}
-				description.setAttribute("placeholder", "Description");
-
-				providerName.disabled = false;
-				if (oldProviderName != null) {
-					providerName.value = oldProviderName;
-				}
-				providerName.setAttribute("placeholder", "Provider Name");
+        reenableNowUsableInputs(authorName, description, providerName);
       } else {
         imageType.setAttribute("class", "flexChild-faoVW3 da-flexChild switchEnabled-V2WDBB switch-3wwwcV da-switchEnabled da-switch valueChecked-m-4IJZ value-2hFrkk sizeDefault-2YlOZr size-3rFEHg themeDefault-24hCdX");
         imageTypeInput.setAttribute("checked", "true");
 
-				if (authorName.value.trim() == "") {
-					description.disabled = true;
-					oldDescription = description.value;
-					description.value = "";
-					description.setAttribute("placeholder", disabledDescription);
-
-					providerName.disabled = true;
-					oldProviderName = providerName.value;
-					providerName.value = "";
-					providerName.setAttribute("placeholder", disabledProviderName);
-				}
+        disableUnusableInputs(authorName, description, providerName);
       }
+
+      createEmbedPreviewPopup(popupWrapperWidth + 100, providerName.value, providerUrl.value, authorName.value, authorUrl.value, description.value, colorPicker.value, imageTypeInput.getAttribute("checked"), imageUrl.value);
     };
     imageTypeText.innerHTML = "Banner Image Mode";
     imageTypeText.setAttribute("style", "position: absolute; text-align: center; width: 100%; height: 100%; line-height: 22.5px;");
@@ -360,6 +317,9 @@ function openEmbedPopup() {
 
     colorPicker.setAttribute("type", "color");
     colorPicker.setAttribute("style", inputStyle + "background-color: #23272A; border: none; border-radius: 5px;");
+    colorPicker.oninput = () => {
+      createEmbedPreviewPopup(popupWrapperWidth + 100, providerName.value, providerUrl.value, authorName.value, authorUrl.value, description.value, colorPicker.value, imageTypeInput.getAttribute("checked"), imageUrl.value);
+    };
 
     submitButton.setAttribute("type", "button");
     submitButton.setAttribute("value", "Send");
@@ -398,11 +358,186 @@ function openEmbedPopup() {
     fadeOutBackground.onclick = () => {
       closeEmbedPopup();
     };
+
+
     document.body.appendChild(fadeOutBackground);
+
+    createEmbedPreviewPopup(popupWrapperWidth + 80, providerName.value, providerUrl.value, authorName.value, authorUrl.value, description.value, colorPicker.value, imageTypeInput.getAttribute("checked"), imageUrl.value);
 
     document.body.appendChild(popupWrapper);
 
     console.log("Embed popup opened.");
+  }
+}
+
+function createEmbedPreviewPopup(offset, providerName, providerUrl, authorName, authorUrl, description, color, imageType, imageUrl) {
+  /*
+  <div class="embed-IeVjo6 da-embed embedWrapper-3AbfJJ da-embedWrapper" aria-hidden="false" style="max-width: 426px;">
+      <div class="embedPill-1Zntps da-embedPill" style="background-color: rgb(55, 201, 208);"></div>
+      <div class="embedInner-1-fpTo da-embedInner">
+          <div class="embedContent-3fnYWm da-embedContent">
+              <div class="embedContentInner-FBnk7v da-embedContentInner markup-2BOw-j da-markup">
+                  <div class=""><a tabindex="0" class="anchor-3Z-8Bb da-anchor anchorUnderlineOnHover-2ESHQB da-anchorUnderlineOnHover embedProviderLink-2Pq1Uw embedLink-1G1K1D embedProvider-3k5pfl da-embedProviderLink da-embedLink da-embedProvider" href="https://www.google.com" rel="noreferrer noopener" target="_blank">providerName</a></div>
+                  <div class="embedAuthor-3l5luH da-embedAuthor embedMargin-UO5XwE da-embedMargin"><a tabindex="0" class="anchor-3Z-8Bb da-anchor anchorUnderlineOnHover-2ESHQB da-anchorUnderlineOnHover embedAuthorNameLink-1gVryT embedLink-1G1K1D embedAuthorName-3mnTWj da-embedAuthorNameLink da-embedLink da-embedAuthorName" href="https://www.google.com" rel="noreferrer noopener" target="_blank">authorName</a></div>
+                  <div class="embedDescription-1Cuq9a da-embedDescription embedMargin-UO5XwE da-embedMargin">description</div>
+              </div>
+          </div>
+          <a class="anchor-3Z-8Bb da-anchor anchorUnderlineOnHover-2ESHQB da-anchorUnderlineOnHover imageWrapper-2p5ogY da-imageWrapper imageZoom-1n-ADA da-imageZoom clickable-3Ya1ho da-clickable embedImage-2W1cML da-embedImage embedMarginLarge-YZDCEs da-embedMarginLarge embedWrapper-3AbfJJ da-embedWrapper" href="https://www.google.com/logos/doodles/2019/first-image-of-a-black-hole-6224607435030528-law.gif" rel="noreferrer noopener" target="_blank" role="button" style="width: 400px; height: 160px;">
+          <img alt="" src="https://images-ext-1.discordapp.net/external/3zRq9gokk_AZQJvMGaPM9ukrFURmeOaXmucSBz-hiXU/https/www.google.com/logos/doodles/2019/first-image-of-a-black-hole-6224607435030528-law.gif?format=png&amp;width=400&amp;height=160" style="width: 400px; height: 160px;"></a>
+      </div>
+  </div>
+  */
+  var img = new Image();
+
+  var create = (useImage) => {
+    var imageWidth = 0;
+    var imageHeight = 0;
+    if (useImage) {
+      imageWidth = img.width;
+      imageHeight = img.height;
+    }
+
+    imageType = (imageType == "true" ? "photo" : "thumbnail");
+
+    var imageString = "";
+
+
+    var embedImageLink = document.createElement("a");
+    if (imageType == "photo") {
+      embedImageLink.setAttribute("class", "anchor-3Z-8Bb da-anchor anchorUnderlineOnHover-2ESHQB da-anchorUnderlineOnHover imageWrapper-2p5ogY da-imageWrapper imageZoom-1n-ADA da-imageZoom clickable-3Ya1ho da-clickable embedImage-2W1cML da-embedImage embedMarginLarge-YZDCEs da-embedMarginLarge embedWrapper-3AbfJJ da-embedWrapper");
+    } else {
+      embedImageLink.setAttribute("class", "anchor-3Z-8Bb da-anchor anchorUnderlineOnHover-2ESHQB da-anchorUnderlineOnHover imageWrapper-2p5ogY da-imageWrapper imageZoom-1n-ADA da-imageZoom clickable-3Ya1ho da-clickable embedThumbnail-2Y84-K da-embedThumbnail");
+    }
+    embedImageLink.setAttribute("href", imageUrl);
+    embedImageLink.setAttribute("ref", "noreferrer noopener");
+    embedImageLink.setAttribute("target", "_blank");
+    embedImageLink.setAttribute("role", "button");
+
+    var embedImage = document.createElement("img");
+    embedImage.setAttribute("src", imageUrl);
+
+    var scaledImageWidth = -1;
+    var scaledImageHeight = -1;
+
+    if (imageType == "photo") {
+      //			` + (imageType == "photo" ? `float: right; max-width: 400px; max-height: 400px;` : `float: default; max-width: 80px; max-height: 80px;`) + ("width: " + imageWidth + "px; height: " + imageHeight + "px;") + `
+
+      var countDownScale = 1000.0;
+      if (imageWidth >= imageHeight) {
+        while (scaledImageWidth > 400 || scaledImageWidth == -1) {
+          scaledImageWidth = imageWidth * (countDownScale / 1000);
+          countDownScale--;
+        }
+        scaledImageHeight = imageHeight * (countDownScale / 1000);
+      } else {
+        while (scaledImageHeight > 400 || scaledImageHeight == -1) {
+          scaledImageHeight = imageHeight * (countDownScale / 1000);
+          countDownScale--;
+        }
+        scaledImageWidth = imageWidth * (countDownScale / 1000);
+      }
+
+			embedImageLink.setAttribute("style", "float: default; max-width: 400px; max-height: 400px; width: " + scaledImageWidth + "px; height: " + scaledImageHeight + "px;");
+			embedImage.setAttribute("style", "max-width: 400px; max-height: 400px; width: " + scaledImageWidth + "px; height: " + scaledImageHeight + "px;");
+    } else {
+      var countDownScale = 1000.0;
+      if (imageWidth >= imageHeight) {
+        while (scaledImageWidth > 80 || scaledImageWidth == -1) {
+          scaledImageWidth = imageWidth * (countDownScale / 1000);
+          countDownScale--;
+        }
+        scaledImageHeight = imageHeight * (countDownScale / 1000);
+      } else {
+        while (scaledImageHeight > 80 || scaledImageHeight == -1) {
+          scaledImageHeight = imageHeight * (countDownScale / 1000);
+          countDownScale--;
+        }
+        scaledImageWidth = imageWidth * (countDownScale / 1000);
+      }
+
+			embedImageLink.setAttribute("style", "float: right; max-width: 80px; max-height: 80px; width: " + scaledImageWidth + "px; height: " + scaledImageHeight + "px;");
+			embedImage.setAttribute("style", "max-width: 80px; max-height: 80px; width: " + scaledImageWidth + "px; height: " + scaledImageHeight + "px;");
+    }
+
+    embedImageLink.appendChild(embedImage);
+
+    imageString = embedImageLink.outerHTML;
+
+
+		var tmpString = `<div class="embed-IeVjo6 da-embed embedWrapper-3AbfJJ da-embedWrapper" aria-hidden="false" style="max-width: 426px; width: auto; height: auto;"><div class="embedPill-1Zntps da-embedPill" style="background-color: ` + (color == "#000000" ? "#4f545c" : color) + `;"></div><div class="embedInner-1-fpTo da-embedInner">` + (useImage ? (imageType == "thumbnail" ? imageString : "") : "") + `<div class="embedContent-3fnYWm da-embedContent"><div class="embedContentInner-FBnk7v da-embedContentInner markup-2BOw-j da-markup" style="clear: right;">` + (providerName.trim() != "" ? `<div class=""><` + (providerUrl.trim() == "" ? "span" : "a") + ` tabindex="0" class="` + (providerUrl.trim() == "" ? "embedProvider-3k5pfl da-embedProvider" : `anchor-3Z-8Bb da-anchor anchorUnderlineOnHover-2ESHQB da-anchorUnderlineOnHover embedProviderLink-2Pq1Uw embedLink-1G1K1D embedProvider-3k5pfl da-embedProviderLink da-embedLink da-embedProvider`) + `" href=` + providerUrl + `" rel="noreferrer noopener" target="_blank">` + providerName + `</` + (providerUrl.trim() == "" ? "span" : "a") + `></div>` : "") + `` + (authorName.trim() != "" ? `<div class="embedAuthor-3l5luH da-embedAuthor embedMargin-UO5XwE da-embedMargin"><` + (authorUrl.trim() == "" ? "span" : "a") + ` tabindex="0" class="` + (authorUrl.trim() == "" ? "embedAuthorName-3mnTWj da-embedAuthorName" : `anchor-3Z-8Bb da-anchor anchorUnderlineOnHover-2ESHQB da-anchorUnderlineOnHover embedAuthorNameLink-1gVryT embedLink-1G1K1D embedAuthorName-3mnTWj da-embedAuthorNameLink da-embedLink da-embedAuthorName`) + `" href="` + authorUrl + `" rel="noreferrer noopener" target="_blank">` + authorName + `</` + (providerUrl.trim() == "" ? "span" : "a") + `></div>` : "") + `` + (description.trim() != "" ? `<div class="embedDescription-1Cuq9a da-embedDescription embedMargin-UO5XwE da-embedMargin">` + description + `</div>` : "") + `</div></div>` + (useImage ? (imageType == "photo" ? imageString : "") : "") + `</div></div>`;
+
+    var htmlString = (providerName.trim() == "" && authorName.trim() == "" && description.trim() == "" && imageType == "photo" ? (providerName.trim() == "" && authorName.trim() == "" && description.trim() == "" && imageUrl.trim() == "" ? tmpString : imageString) : tmpString);
+    if (!document.getElementById("embedPreviewWrapper")) {
+      var previewWrapper = document.createElement("div");
+      var previewWrapperWidth = 446;
+      var previewWrapperHeight = 446;
+      previewWrapper.setAttribute("id", "embedPreviewWrapper");
+      previewWrapper.setAttribute("class", "theme-dark");
+
+      var embedButton = document.getElementsByClassName("embed-button-wrapper")[0].getBoundingClientRect();
+      var positionInterval = setInterval(() => {
+        if (!document.getElementById("embedPreviewWrapper")) {
+          window.clearInterval(positionInterval);
+        }
+        previewWrapper.setAttribute("style", "border-radius: 10px; width: auto; height: auto; position: absolute; top: " + ((window.innerHeight / 2) - (previewWrapperHeight / 2)) + "px; left: " + ((window.innerWidth / 2) - (previewWrapperWidth / 2) + offset) + "px; background-color: #36393F; z-index: 999999999999999999999; padding: 10px;");
+      }, 100);
+
+      previewWrapper.innerHTML = htmlString;
+
+      document.body.appendChild(previewWrapper);
+
+      return previewWrapper;
+    } else {
+      // Refresh the embed preview because it is already there.
+      var previewWrapper = document.getElementById("embedPreviewWrapper");
+      previewWrapper.innerHTML = htmlString;
+      return embedPreviewWrapper;
+    }
+  };
+
+  img.onload = function() {
+    create(true);
+  };
+  img.onerror = function() {
+    create(false);
+  };
+
+  img.src = imageUrl;
+}
+
+function testImage(imageUrl) {
+  return (imageUrl.trim() != "" ? true : false);
+}
+
+var oldDescription = "";
+var oldProviderName = "";
+var disabledDescription = "You must have an author name to use the description or provider name with image banner mode on.";
+var disabledProviderName = "Read the description box.";
+
+function reenableNowUsableInputs(authorName, description, providerName) {
+  description.disabled = false;
+  if (oldDescription != "") {
+    description.value = oldDescription;
+  }
+  description.setAttribute("placeholder", "Description");
+
+  providerName.disabled = false;
+  if (oldProviderName != "") {
+    providerName.value = oldProviderName;
+  }
+  providerName.setAttribute("placeholder", "Provider Name");
+}
+
+function disableUnusableInputs(authorName, description, providerName) {
+  if (authorName.value.trim() == "") {
+    description.disabled = true;
+    description.value = "";
+    description.setAttribute("placeholder", disabledDescription);
+
+    providerName.disabled = true;
+    oldProviderName = providerName.value;
+    providerName.value = "";
+    providerName.setAttribute("placeholder", disabledProviderName);
   }
 }
 
@@ -411,6 +546,9 @@ function closeEmbedPopup() {
 
   document.getElementById("embedPopupWrapper").remove();
   document.getElementById("fadeOutBackground").remove();
+  oldDescription = "";
+  oldProviderName = "";
+  document.getElementById("embedPreviewWrapper").remove();
 }
 
 SafeEmbedGenerator.prototype.observer = function(e) {
@@ -430,7 +568,7 @@ SafeEmbedGenerator.prototype.getDescription = function() {
 };
 
 SafeEmbedGenerator.prototype.getVersion = function() {
-  return "1.1.4";
+  return "1.2.0";
 };
 
 SafeEmbedGenerator.prototype.getAuthor = function() {
