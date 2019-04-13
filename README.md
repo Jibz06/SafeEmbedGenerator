@@ -34,7 +34,7 @@ This BetterDiscord plugin adds a button to the right of your text box which allo
 
 ## Coming Soon
 
- * Permissions checker before sending your embed to make sure you are allowed to send embedded links in that channel.
+ * Permissions checker before sending your embed to make sure you are allowed to send embed links in that channel.
  * Recently used embeds.
  * Saved embeds.
  * General settings.
