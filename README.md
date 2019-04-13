@@ -19,6 +19,10 @@ This BetterDiscord plugin adds a button to the right of your text box which allo
 
 ## Changelog
 
+### 1.2.9
+
+ * Fixed a major bug where the plugin crashes after restarting Discord.
+
 ### 1.2.8.5
 
  * Fixed a bug inside of the previous bug which still allowed blank embeds.
