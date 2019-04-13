@@ -19,6 +19,10 @@ This BetterDiscord plugin adds a button to the right of your text box which allo
 
 ## Changelog
 
+### 1.2.6
+
+ * Fixed a major bug where users were unable to send embedded links in DMs.
+
 ### 1.2.5
 
  * Added a small safeguard to prevent users from sending embed links in channels where doing so is disabled.
