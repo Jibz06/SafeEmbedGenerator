@@ -157,7 +157,7 @@ function sendEmbed(providerName, providerUrl, authorName, authorUrl, title, desc
 	var permissions = channel.discordObject.permissions;
 
 	// Only send the embed if the user has permissions to embed links.
-	if ((permissions & 0x4000) != 0) {
+	if ((permissions & 0x4000) != 0 || channel.type != "GUILD_TEXT") {
 		const obj = {};
 		obj.providerName = providerName;
 		obj.providerUrl = providerUrl; // The link on the Provider Name.
@@ -185,7 +185,7 @@ function sendEmbed(providerName, providerUrl, authorName, authorUrl, title, desc
 			ZLibrary.DiscordAPI.Channel.fromId(channelId).sendMessage(`http://em.0x71.cc/${body.id}`, true);
 		});
 	} else {
-		ZLibrary.DiscordAPI.Channel.fromId(channelId).sendBotMessage(`You do not have permissions to send embedded links in this channel.\nBecause of this your message was not sent in order to prevent the embarrassment of 1,000 deaths.\nThis is not a problem with the plugin, it is a server setting.`);
+		BdApi.alert("SafeEmbedGenerator", `You do not have permissions to send embedded links in this channel.<br><br>Because of this your message was not sent in order to prevent the embarrassment of 1,000 deaths.<br><br>This is <strong><u>not</u></strong> a problem with the plugin, it is a <strong><u>server setting</u></strong>.`);
 	}
 
 
@@ -624,7 +624,7 @@ SafeEmbedGenerator.prototype.getDescription = function() {
 };
 
 SafeEmbedGenerator.prototype.getVersion = function() {
-  return "1.2.5";
+  return "1.2.6";
 };
 
 SafeEmbedGenerator.prototype.getAuthor = function() {
