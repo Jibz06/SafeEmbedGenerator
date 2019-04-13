@@ -376,7 +376,7 @@ function openEmbedPopup() {
     submitButton.onclick = () => {
       if (!(providerName.value.trim() == "" && providerUrl.value.trim() == "" && authorName.value.trim() == "" && authorUrl.value.trim() == "" && description.value.trim() == "" && imageUrl.value.trim() == "")) {
 				var img = new Image();
-				if ((providerName.value.trim() == "" && providerUrl.value.trim() == "" && authorName.value.trim() == "" && authorUrl.value.trim() == "" && description.value.trim() == "" && imageUrl.value.trim() != "")) {
+				if ((providerName.value.trim() == "" && authorName.value.trim() == "" && description.value.trim() == "" && imageUrl.value.trim() != "")) {
 					img.onload = function() {
 						sendEmbed(providerName.value, providerUrl.value, authorName.value, authorUrl.value, "", description.value, imageUrl.value, imageTypeInput.getAttribute("checked"), colorPicker.value);
 						closeEmbedPopup();
@@ -651,7 +651,7 @@ SafeEmbedGenerator.prototype.getDescription = function() {
 };
 
 SafeEmbedGenerator.prototype.getVersion = function() {
-  return "1.2.8";
+  return "1.2.8.5";
 };
 
 SafeEmbedGenerator.prototype.getAuthor = function() {
