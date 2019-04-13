@@ -19,6 +19,10 @@ This BetterDiscord plugin adds a button to the right of your text box which allo
 
 ## Changelog
 
+### 1.2.7
+
+ * The embed icon now only appears if you are able to send embeds.
+
 ### 1.2.6
 
  * Fixed a major bug where users were unable to send embedded links in DMs.
