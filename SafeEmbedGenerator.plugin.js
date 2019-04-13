@@ -30,6 +30,8 @@ SafeEmbedGenerator.prototype.start = function() {
     ZLibrary.PluginUpdater.checkForUpdate("SafeEmbedGenerator", this.getVersion(), "https://raw.githubusercontent.com/KyzaGitHub/SafeEmbedGenerator/master/SafeEmbedGenerator.plugin.js");
   }, 5000);
 
+	addButton();
+
   // libraryScript = document.getElementById("ShowdownJS");
   // if (!libraryScript || !window.ShowdownJS) {
   //   if (libraryScript) libraryScript.parentElement.removeChild(libraryScript);
@@ -64,15 +66,16 @@ SafeEmbedGenerator.prototype.start = function() {
 };
 
 SafeEmbedGenerator.prototype.load = function() {
-
+	addButton();
 };
 
 SafeEmbedGenerator.prototype.unload = function() {
-
+	removeButton();
 };
 
 SafeEmbedGenerator.prototype.stop = function() {
   clearInterval(updateInterval);
+	removeButton();
 };
 
 SafeEmbedGenerator.prototype.onMessage = function() {
@@ -128,6 +131,12 @@ function addButton() {
 
     embedButton.onclick = openEmbedPopup;
   }
+}
+
+function removeButton() {
+	if (document.getElementsByClassName("embed-button-wrapper").length > 0) {
+		document.getElementsByClassName("embed-button-wrapper")[0].remove();
+	}
 }
 
 function sendEmbed(providerName, providerUrl, authorName, authorUrl, title, description, image, imageType, color) {
@@ -219,7 +228,7 @@ function openEmbedPopup() {
     var fadeOutBackground = document.createElement("div");
 
     var inputStyle = "width: 275px; margin: auto auto 10px auto;";
-    var textInputStyle = "background-color: #23272A; border: none; border-radius: 5px; height: 30px; padding-left: 10px;";
+    var textInputStyle = "background-color: #484B52; border: none; border-radius: 5px; height: 30px; padding-left: 10px;";
 
     providerName.setAttribute("type", "text");
     providerName.setAttribute("placeholder", "Provider Name");
@@ -316,14 +325,14 @@ function openEmbedPopup() {
 		*/
 
     colorPicker.setAttribute("type", "color");
-    colorPicker.setAttribute("style", inputStyle + "background-color: #23272A; border: none; border-radius: 5px;");
+    colorPicker.setAttribute("style", inputStyle + "background-color: #484B52; border: none; border-radius: 5px;");
     colorPicker.oninput = () => {
       createEmbedPreviewPopup(popupWrapperWidth + 100, providerName.value, providerUrl.value, authorName.value, authorUrl.value, description.value, colorPicker.value, imageTypeInput.getAttribute("checked"), imageUrl.value);
     };
 
     submitButton.setAttribute("type", "button");
     submitButton.setAttribute("value", "Send");
-    submitButton.setAttribute("style", inputStyle + "background-color: #23272A; border: none; border-radius: 5px; color: #99AAB5; height: 30px;");
+    submitButton.setAttribute("style", inputStyle + "background-color: #484B52; border: none; border-radius: 5px; color: #99AAB5; height: 30px;");
 
     submitButton.onclick = () => {
       if (!(providerName.value.trim() == "" && providerUrl.value.trim() == "" && authorName.value.trim() == "" && authorUrl.value.trim() == "" && description.value.trim() == "" && imageUrl.value.trim() == "")) {
@@ -568,7 +577,7 @@ SafeEmbedGenerator.prototype.getDescription = function() {
 };
 
 SafeEmbedGenerator.prototype.getVersion = function() {
-  return "1.2.0";
+  return "1.2.1";
 };
 
 SafeEmbedGenerator.prototype.getAuthor = function() {
