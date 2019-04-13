@@ -17,15 +17,27 @@ This BetterDiscord plugin adds a button which allows you to create safe embeds w
  * Image Banner Mode: Changes the image to a banner. Displays as a normal image if no text is in the embed. You cannot use `Provider Name` or `Description` if this is enabled unless you use `Author Name`.
  * Color: The color of the embed, in rrggbb format (without the #). Must be exactly 6 characters long if used.
 
+## Changelog
+
+### 1.0.0
+
+ * Release.
+
+### 1.1.0
+
+ * Changed the API.
+ * Added update handling.
+
+### 1.2.0
+
+ * Added live embed previews.
+
 ## Coming Soon
 
  * General settings.
  * Save the last used color.
  * Recently used embeds.
  * Favorite embeds.
- * Live embed preview.
- * Make the plugin itself generate the embed and host it on CodePen?
- * Make my own API?
 
 ## Credits
 
