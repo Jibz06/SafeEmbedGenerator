@@ -37,6 +37,10 @@ This BetterDiscord plugin adds a button to the right of your text box which allo
  * Lightened the color of the UI to match the dark mode standard.
  * Fixed a bug where the plugin behaves as the older version after updating until the user switches channels.
 
+### 1.2.2
+
+ * Removed useless code.
+
 ## Coming Soon
 
  * Permissions checker before sending your embed to make sure you are allowed to send embed links in that channel.
