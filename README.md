@@ -1,6 +1,6 @@
 # SafeEmbedGenerator
 
-This BetterDiscord plugin adds a button which allows you to create safe embeds with ease.
+This BetterDiscord plugin adds a button to the right of your text box which allows you to create safe embeds with ease.
 
 <img src="media/live.gif?raw=true">
 
