@@ -375,8 +375,17 @@ function openEmbedPopup() {
 
     submitButton.onclick = () => {
       if (!(providerName.value.trim() == "" && providerUrl.value.trim() == "" && authorName.value.trim() == "" && authorUrl.value.trim() == "" && description.value.trim() == "" && imageUrl.value.trim() == "")) {
-        sendEmbed(providerName.value, providerUrl.value, authorName.value, authorUrl.value, "", description.value, imageUrl.value, imageTypeInput.getAttribute("checked"), colorPicker.value);
-        closeEmbedPopup();
+				var img = new Image();
+				if ((providerName.value.trim() == "" && providerUrl.value.trim() == "" && authorName.value.trim() == "" && authorUrl.value.trim() == "" && description.value.trim() == "" && imageUrl.value.trim() != "")) {
+					img.onload = function() {
+						sendEmbed(providerName.value, providerUrl.value, authorName.value, authorUrl.value, "", description.value, imageUrl.value, imageTypeInput.getAttribute("checked"), colorPicker.value);
+						closeEmbedPopup();
+					};
+					img.src = imageUrl.value;
+				} else {
+					sendEmbed(providerName.value, providerUrl.value, authorName.value, authorUrl.value, "", description.value, imageUrl.value, imageTypeInput.getAttribute("checked"), colorPicker.value);
+					closeEmbedPopup();
+				}
       }
     };
 
@@ -642,7 +651,7 @@ SafeEmbedGenerator.prototype.getDescription = function() {
 };
 
 SafeEmbedGenerator.prototype.getVersion = function() {
-  return "1.2.7";
+  return "1.2.8";
 };
 
 SafeEmbedGenerator.prototype.getAuthor = function() {
