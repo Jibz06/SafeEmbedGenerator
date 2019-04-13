@@ -19,31 +19,9 @@ This BetterDiscord plugin adds a button to the right of your text box which allo
 
 ## Changelog
 
-### 1.0.0
+### 1.2.5
 
- * Release.
-
-### 1.1.0
-
- * Changed the API.
- * Added update handling.
-
-### 1.2.0
-
- * Added live embed previews.
-
-### 1.2.1
-
- * Lightened the color of the UI to match the dark mode standard.
- * Fixed a bug where the plugin behaves as the older version after updating until the user switches channels.
-
-### 1.2.2
-
- * Removed useless code.
- 
-### 1.2.3
-
- * Optimized text for readability.
+ * Added a small safeguard to prevent users from sending embed links in channels where doing so is disabled.
 
 ### 1.2.4
 
@@ -51,9 +29,34 @@ This BetterDiscord plugin adds a button to the right of your text box which allo
  * Added a loading GIF for the embed preview images.
  * Fixed a major bug where the embed preview would reopen while loading large GIFs or images.
 
+### 1.2.3
+
+ * Optimized text for readability.
+
+### 1.2.2
+
+ * Removed useless code.
+ 
+### 1.2.1
+
+ * Lightened the color of the UI to match the dark mode standard.
+ * Fixed a bug where the plugin behaves as the older version after updating until the user switches channels.
+
+### 1.2.0
+
+ * Added live embed previews.
+
+### 1.1.0
+
+ * Changed the API.
+ * Added update handling.
+
+### 1.0.0
+
+ * Release.
+
 ## Coming Soon
 
- * Permissions checker before sending your embed to make sure you are allowed to send embed links in that channel.
  * Recently used embeds.
  * Saved embeds.
  * General settings.
