@@ -149,35 +149,45 @@ function removeButton() {
   }
 }
 
+
+
 function sendEmbed(providerName, providerUrl, authorName, authorUrl, title, description, image, imageType, color) {
-  var channelId = window.location.toString().split("/")[window.location.toString().split("/").length - 1];
+	var channelId = window.location.toString().split("/")[window.location.toString().split("/").length - 1];
+	var channel = ZLibrary.DiscordAPI.Channel.from(ZLibrary.DiscordAPI.Channel.fromId(channelId));
+	var permissions = channel.discordObject.permissions;
 
-  const obj = {};
-  obj.providerName = providerName;
-  obj.providerUrl = providerUrl; // The link on the Provider Name.
-  obj.authorName = authorName + (imageType == "true" ? " " : "");
-  obj.authorUrl = authorUrl; // The link on the Author Name.
-  obj.title = title;
-  obj.description = description;
-  obj.isBanner = (imageType == "true" ? true : false); // Photo is a banner, nothing is a small image on the right.
-  obj.image = image; // The image displayed on the right.
-  obj.color = color.replace("#", ""); // The color on the left of the embed.
+	// Only send the embed if the user has permissions to embed links.
+	if ((permissions & 0x4000) != 0) {
+		const obj = {};
+		obj.providerName = providerName;
+		obj.providerUrl = providerUrl; // The link on the Provider Name.
+		obj.authorName = authorName + (imageType == "true" ? " " : "");
+		obj.authorUrl = authorUrl; // The link on the Author Name.
+		obj.title = title;
+		obj.description = description;
+		obj.isBanner = (imageType == "true" ? true : false); // Photo is a banner, nothing is a small image on the right.
+		obj.image = image; // The image displayed on the right.
+		obj.color = color.replace("#", ""); // The color on the left of the embed.
 
-  // https://em.0x17.cc
+		// https://em.0x17.cc
 
-  var request = require("request");
+		var request = require("request");
 
-  request({
-    url: "https://em.0x71.cc/",
-    method: "POST",
-    json: obj
-  }, (err, res, body) => {
-    if (err) {
-      console.error(err);
-      return;
-    }
-    ZLibrary.DiscordAPI.Channel.fromId(channelId).sendMessage(`http://em.0x71.cc/${body.id}`, true);
-  });
+		request({
+			url: "https://em.0x71.cc/",
+			method: "POST",
+			json: obj
+		}, (err, res, body) => {
+			if (err) {
+				console.error(err);
+				return;
+			}
+			ZLibrary.DiscordAPI.Channel.fromId(channelId).sendMessage(`http://em.0x71.cc/${body.id}`, true);
+		});
+	} else {
+		ZLibrary.DiscordAPI.Channel.fromId(channelId).sendBotMessage(`You do not have permissions to send embedded links in this channel.\nBecause of this your message was not sent in order to prevent the embarrassment of 1,000 deaths.\nThis is not a problem with the plugin, it is a server setting.`);
+	}
+
 
   // fetch("https://em.0x71.cc/", {
   //   method: "POST",
@@ -614,7 +624,7 @@ SafeEmbedGenerator.prototype.getDescription = function() {
 };
 
 SafeEmbedGenerator.prototype.getVersion = function() {
-  return "1.2.4";
+  return "1.2.5";
 };
 
 SafeEmbedGenerator.prototype.getAuthor = function() {
