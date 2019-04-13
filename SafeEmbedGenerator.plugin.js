@@ -577,49 +577,9 @@ SafeEmbedGenerator.prototype.getDescription = function() {
 };
 
 SafeEmbedGenerator.prototype.getVersion = function() {
-  return "1.2.1";
+  return "1.2.2";
 };
 
 SafeEmbedGenerator.prototype.getAuthor = function() {
   return "Kyza#9994";
-};
-
-// stolen lol
-
-function getCurrentChannelId() {
-  var channelId = null;
-  var ids = getIds();
-  try {
-    var ids = getIds();
-    /*if(ids === null) return; // Not on a channel
-    if(ids.isDm) {
-        channelId = ids.guildId;
-    } //dm so do whatever
-    else {
-        //const { guildId, channelId } = ids;
-        channelId = ids.channelId;
-    }*/
-    channelId = ids.channelId;
-    //console.log("guildId: " + guildId + "\n channelId: " + channelId);
-  } catch (e) {
-    console.log("Failed to get channel Id");
-  }
-  return channelId;
-};
-
-function getIds() {
-  try {
-    const ids = window.location.pathname.match(/\d+/g).reduce((obj, el, index) => {
-      obj[index === 0 ? 'guildId' : 'channelId'] = el;
-      return obj;
-    }, {});
-    if (Object.keys(ids).length === 1) return {
-      isDm: true,
-      dmId: ids.guildId
-    } //Is probably a dm so return dmId
-
-    return ids; //guildId = active guild id, channelId = active channel id
-  } catch (err) {
-    return null; //Not on any channel/dm
-  }
 };
