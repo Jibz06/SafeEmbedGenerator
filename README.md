@@ -45,6 +45,12 @@ This BetterDiscord plugin adds a button to the right of your text box which allo
 
  * Optimized text for readability.
 
+### 1.2.4
+
+ * Optimized embed preview image loading.
+ * Added a loading GIF for the embed preview images.
+ * Fixed a major bug where the embed preview would reopen while loading large GIFs or images.
+
 ## Coming Soon
 
  * Permissions checker before sending your embed to make sure you are allowed to send embed links in that channel.
