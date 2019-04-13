@@ -2,7 +2,7 @@
 
 This BetterDiscord plugin adds a button which allows you to create safe embeds with ease.
 
-![https://imgur.com/Fah5BXD.png](https://imgur.com/Fah5BXD.png)
+<img src="media/live.gif?raw=true">
 
 ![https://imgur.com/8IGwGGa.png](https://imgur.com/8IGwGGa.png)
 
