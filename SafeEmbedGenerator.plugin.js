@@ -204,7 +204,7 @@ function openEmbedPopup() {
       if (!document.getElementById("embedPopupWrapper")) {
         window.clearInterval(positionInterval);
       }
-      popupWrapper.setAttribute("style", "text-align: center; border-radius: 10px; width: " + popupWrapperWidth + "px; height: " + popupWrapperHeight + "px; position: absolute; top: " + ((window.innerHeight / 2) - (popupWrapperHeight / 2)) + "px; left: " + ((window.innerWidth / 2) - (popupWrapperWidth / 2)) + "px; background-color: #36393F; z-index: 999999999999999999999;");
+      popupWrapper.setAttribute("style", "text-align: center; border-radius: 10px; width: " + popupWrapperWidth + "px; height: " + popupWrapperHeight + "px; position: absolute; top: " + ((window.innerHeight / 2) - (popupWrapperHeight / 2)) + "px; left: " + ((window.innerWidth / 2) - (popupWrapperWidth / 2)) + "px; background-color: #36393F; z-index: 999999999999999999999; text-rendering: optimizeLegibility;");
     }, 100);
 
     // Exit button: <svg width="18" height="18" class="button-1w5pas da-button dropdown-33sEFX da-dropdown open-1Te94t da-open"><g fill="none" fill-rule="evenodd"><path d="M0 0h18v18H0"></path><path stroke="#FFF" d="M4.5 4.5l9 9" stroke-linecap="round"></path><path stroke="#FFF" d="M13.5 4.5l-9 9" stroke-linecap="round"></path></g></svg>
@@ -482,6 +482,7 @@ function createEmbedPreviewPopup(offset, providerName, providerUrl, authorName, 
       var previewWrapperHeight = 446;
       previewWrapper.setAttribute("id", "embedPreviewWrapper");
       previewWrapper.setAttribute("class", "theme-dark");
+			previewWrapper.setAttribute("style", "text-rendering: optimizeLegibility;");
 
       var embedButton = document.getElementsByClassName("embed-button-wrapper")[0].getBoundingClientRect();
       var positionInterval = setInterval(() => {
@@ -577,7 +578,7 @@ SafeEmbedGenerator.prototype.getDescription = function() {
 };
 
 SafeEmbedGenerator.prototype.getVersion = function() {
-  return "1.2.2";
+  return "1.2.3";
 };
 
 SafeEmbedGenerator.prototype.getAuthor = function() {
