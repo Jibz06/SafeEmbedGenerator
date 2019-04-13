@@ -40,6 +40,10 @@ This BetterDiscord plugin adds a button to the right of your text box which allo
 ### 1.2.2
 
  * Removed useless code.
+ 
+### 1.2.3
+
+ * Optimized text for readability.
 
 ## Coming Soon
 
