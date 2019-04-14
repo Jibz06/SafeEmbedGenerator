@@ -75,7 +75,7 @@ This BetterDiscord plugin adds a button to the right of your text box which allo
 
  * Release.
 
-## Coming Soon
+## Planned Feature
 
  * Recently used embeds.
  * Saved embeds.
