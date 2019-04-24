@@ -19,6 +19,10 @@ This BetterDiscord plugin adds a button to the right of your text box which allo
 
 ## Changelog
 
+### 1.2.10
+
+ * Disallowed the use of this plugin on the BetterDiscord servers to prevent spamming.
+
 ### 1.2.9
 
  * Fixed a major bug where the plugin crashes after restarting Discord.
