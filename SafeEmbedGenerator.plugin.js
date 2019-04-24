@@ -95,7 +95,6 @@ function addButton() {
     var permissions = channel.discordObject.permissions;
 
     // Only add the button if the user has permissions to send messages and embed links.
-		console.log(isAllowed());
     if (isAllowed() && (hasPermission("textEmbedLinks") && hasPermission("textSendMessages")) || channel.type != "GUILD_TEXT") {
       if (document.getElementsByClassName("embed-button-wrapper").length == 0) {
         var daButtons = document.getElementsByClassName("da-buttons")[0];
