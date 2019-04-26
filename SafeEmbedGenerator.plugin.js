@@ -95,6 +95,7 @@ function addButton() {
     var permissions = channel.discordObject.permissions;
 
     // Only add the button if the user has permissions to send messages and embed links.
+		console.log("isAllowed()", isAllowed());
     if (isAllowed() && (hasPermission("textEmbedLinks") && hasPermission("textSendMessages")) || channel.type != "GUILD_TEXT") {
       if (document.getElementsByClassName("embed-button-wrapper").length == 0) {
         var daButtons = document.getElementsByClassName("da-buttons")[0];
@@ -156,12 +157,12 @@ function isAllowed() {
     betterDiscordServer2 = ZLibrary.DiscordAPI.Guild.fromId("86004744966914048")
   } catch (e) {}
 
-  var currentUser1 = betterDiscordServer1.currentUser;
-  var currentUser2 = betterDiscordServer2.currentUser;
-
-  if (!betterDiscordServer1 && !betterDiscordServer2) {
+  if (!betterDiscordServer1 || !betterDiscordServer2) {
     return true;
   }
+
+	var currentUser1 = betterDiscordServer1.currentUser;
+	var currentUser2 = betterDiscordServer2.currentUser;
 
   if (guildId.toString() == "86004744966914048" || guildId.toString() == "280806472928198656") {
     if (!betterDiscordServer1) {
@@ -754,7 +755,7 @@ SafeEmbedGenerator.prototype.getDescription = function() {
 };
 
 SafeEmbedGenerator.prototype.getVersion = function() {
-  return "1.2.11";
+  return "1.2.12";
 };
 
 SafeEmbedGenerator.prototype.getAuthor = function() {
