@@ -19,6 +19,10 @@ This BetterDiscord plugin adds a button to the right of your text box which allo
 
 ## Changelog
 
+### 1.2.12
+
+ * Fixed a major bug in the logic which made the plugin unusable in DMs.
+
 ### 1.2.11
 
  * Fixed a major bug which made it so that if someone was not in one of the BetterDiscord servers they couldn't send embeds anywhere.
