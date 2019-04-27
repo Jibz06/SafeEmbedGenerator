@@ -1,4 +1,4 @@
-//META{"name":"SafeEmbedGenerator","website":"https://github.com/KyzaGitHub/SafeEmbedGenerator","source":"https://raw.githubusercontent.com/KyzaGitHub/SafeEmbedGenerator/master/SafeEmbedGenerator.plugin.js"}*//
+//META{"name":"SafeEmbedGenerator","website":"https://github.com/KyzaGitHub/Khub","source":"https://raw.githubusercontent.com/KyzaGitHub/Khub/master/v1%20Plugins/SafeEmbedGenerator/SafeEmbedGenerator.plugin.js"}*//
 
 var SafeEmbedGenerator = function() {};
 
@@ -21,7 +21,7 @@ SafeEmbedGenerator.prototype.start = function() {
   }
 
   updateInterval = setInterval(() => {
-    ZLibrary.PluginUpdater.checkForUpdate("SafeEmbedGenerator", this.getVersion(), "https://raw.githubusercontent.com/KyzaGitHub/SafeEmbedGenerator/master/SafeEmbedGenerator.plugin.js");
+    ZLibrary.PluginUpdater.checkForUpdate("SafeEmbedGenerator", this.getVersion(), "https://raw.githubusercontent.com/KyzaGitHub/Khub/master/v1%20Plugins/SafeEmbedGenerator/SafeEmbedGenerator.plugin.js");
   }, 5000);
 
   makeSureClosedInterval = setInterval(() => {
